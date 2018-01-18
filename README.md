@@ -10,8 +10,10 @@ make dcup
 
 ### 组件列表
 
-- jFRog Artifactory 5.8.3 (URL: http://artifactory.local/ DATA: /data/artifactory)
-- Jenkins 2.102 (URL: http://jenkins.local/ DATA: /data/jenkins)
+- [GitLab 10.3.4](https://docs.gitlab.com/omnibus/docker/) (URL: http://gitlab.local/ DATA: /data/gitlab)
+- [Jenkins 2.102](https://github.com/jenkinsci/docker/blob/master/README.md) (URL: http://jenkins.local/ DATA: /data/jenkins)
+- [jFRog Artifactory 5.8.3](https://www.jfrog.com/confluence/display/RTF/Installing+with+Docker) (URL: http://artifactory.local/ DATA: /data/artifactory)
+
 
 ## TODOLIST
 

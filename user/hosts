@@ -8,4 +8,6 @@
 255.255.255.255	broadcasthost
 ::1             localhost
 
+192.168.102.64	gitlab.local
+192.168.102.64	jenkins.local
 192.168.102.64	artifactory.local
