@@ -20,6 +20,10 @@ services:
       - /data/artifactory:/var/opt/jfrog/artifactory
     environment:
       - VIRTUAL_HOST=artifactory.local
+    extra_hosts:
+      - "gitlab.local:192.168.102.64"
+      - "jenkins.local:192.168.102.64"
+      - "artifactory.local:192.168.102.64"
     restart: always
     ulimits:
       nproc: 65535
@@ -39,6 +43,10 @@ services:
     environment:
       - VIRTUAL_HOST=jenkins.local
       - VIRTUAL_PORT=8080
+    extra_hosts:
+      - "gitlab.local:192.168.102.64"
+      - "jenkins.local:192.168.102.64"
+      - "artifactory.local:192.168.102.64"
     restart: always
     ulimits:
       nproc: 65535
@@ -47,6 +55,7 @@ services:
         hard: 40000
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
+    container_name: gitlab
     hostname: 'gitlab.local'
     environment:
       VIRTUAL_HOST: gitlab.local
@@ -54,6 +63,10 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.local'
         # Add any other gitlab.rb configuration here, each on its own line
+    extra_hosts:
+      - "gitlab.local:192.168.102.64"
+      - "jenkins.local:192.168.102.64"
+      - "artifactory.local:192.168.102.64"
     volumes:
       - '/data/gitlab/config:/etc/gitlab'
       - '/data/gitlab/logs:/var/log/gitlab'
