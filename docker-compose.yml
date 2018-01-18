@@ -25,3 +25,20 @@ services:
       nofile:
         soft: 32000
         hard: 40000
+  jenkins:
+    image: jenkins/jenkins:latest
+    container_name: jenkins
+    expose:
+      - 8080
+    ports:
+      - 50000:50000
+    volumes:
+      - /data/jenkins:/var/jenkins_home
+    environment:
+      - VIRTUAL_HOST=jenkins.local
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
