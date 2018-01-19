@@ -25,6 +25,7 @@ services:
       - "jenkins.local:192.168.102.64"
       - "artifactory.local:192.168.102.64"
       - "registry.local:192.168.102.64"
+      - "jaeger.local:192.168.102.64"
     restart: always
     ulimits:
       nproc: 65535
@@ -49,6 +50,7 @@ services:
       - "jenkins.local:192.168.102.64"
       - "artifactory.local:192.168.102.64"
       - "registry.local:192.168.102.64"
+      - "jaeger.local:192.168.102.64"
     restart: always
     ulimits:
       nproc: 65535
@@ -70,6 +72,7 @@ services:
       - "jenkins.local:192.168.102.64"
       - "artifactory.local:192.168.102.64"
       - "registry.local:192.168.102.64"
+      - "jaeger.local:192.168.102.64"
     volumes:
       - '/data/gitlab/config:/etc/gitlab'
       - '/data/gitlab/logs:/var/log/gitlab'
@@ -86,7 +89,29 @@ services:
       - "jenkins.local:192.168.102.64"
       - "artifactory.local:192.168.102.64"
       - "registry.local:192.168.102.64"
+      - "jaeger.local:192.168.102.64"
     volumes:
       - '/data/registry:/var/lib/registry'
       - './etc/docker/registry/config.yml:/etc/docker/registry/config.yml'
     restart: always
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 9411:9411
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+      - VIRTUAL_HOST=jaeger.local
+      - VIRTUAL_PORT=16686
+    extra_hosts:
+      - "gitlab.local:192.168.102.64"
+      - "jenkins.local:192.168.102.64"
+      - "artifactory.local:192.168.102.64"
+      - "registry.local:192.168.102.64"
+      - "jaeger.local:192.168.102.64"

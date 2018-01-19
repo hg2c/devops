@@ -1,0 +1,4 @@
+{
+  "registry-mirrors": ["bqr1dr1n.mirror.aliyuncs.com"],
+  "insecure-registries" : ["registry.local"]
+}
