@@ -24,6 +24,7 @@ services:
       - "gitlab.local:192.168.102.64"
       - "jenkins.local:192.168.102.64"
       - "artifactory.local:192.168.102.64"
+      - "registry.local:192.168.102.64"
     restart: always
     ulimits:
       nproc: 65535
@@ -47,6 +48,7 @@ services:
       - "gitlab.local:192.168.102.64"
       - "jenkins.local:192.168.102.64"
       - "artifactory.local:192.168.102.64"
+      - "registry.local:192.168.102.64"
     restart: always
     ulimits:
       nproc: 65535
@@ -67,8 +69,24 @@ services:
       - "gitlab.local:192.168.102.64"
       - "jenkins.local:192.168.102.64"
       - "artifactory.local:192.168.102.64"
+      - "registry.local:192.168.102.64"
     volumes:
       - '/data/gitlab/config:/etc/gitlab'
       - '/data/gitlab/logs:/var/log/gitlab'
       - '/data/gitlab/data:/var/opt/gitlab'
+    restart: always
+  docker-registry:
+    image: 'registry:2'
+    container_name: docker-registry
+    environment:
+      VIRTUAL_HOST: registry.local
+      VIRTUAL_PORT: 5000
+    extra_hosts:
+      - "gitlab.local:192.168.102.64"
+      - "jenkins.local:192.168.102.64"
+      - "artifactory.local:192.168.102.64"
+      - "registry.local:192.168.102.64"
+    volumes:
+      - '/data/registry:/var/lib/registry'
+      - './etc/docker/registry/config.yml:/etc/docker/registry/config.yml'
     restart: always
