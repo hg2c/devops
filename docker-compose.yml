@@ -94,6 +94,7 @@ services:
       - '/data/registry:/var/lib/registry'
       - './etc/docker/registry/config.yml:/etc/docker/registry/config.yml'
     restart: always
+
   jaeger:
     image: jaegertracing/all-in-one:latest
     container_name: jaeger
@@ -116,30 +117,19 @@ services:
       - "registry.local:192.168.102.64"
       - "jaeger.local:192.168.102.64"
 
-# docker run -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
-
-
-# docker run \
-#   -d \
-#   -p 3000:3000 \
-#   --name=grafana \
-#   -e "GF_SERVER_ROOT_URL=http://grafana.server.name" \
-#   -e "GF_SECURITY_ADMIN_PASSWORD=secret" \
-#   grafana/grafana
-# # create /var/lib/grafana as persistent volume storage
-# docker run -d -v /var/lib/grafana --name grafana-storage busybox:latest
-
-# # start grafana
-# docker run \
-#   -d \
-#   -p 3000:3000 \
-#   --name=grafana \
-#   --volumes-from grafana-storage \
-#   grafana/grafana
-
-# docker run \
-#   -d \
-#   -p 3000:3000 \
-#   --name=grafana \
-#   -e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource" \
-#   grafana/grafana
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    environment:
+      - VIRTUAL_HOST=prometheus.local
+      - VIRTUAL_PORT=9090
+    extra_hosts:
+      - "gitlab.local:192.168.102.64"
+      - "jenkins.local:192.168.102.64"
+      - "artifactory.local:192.168.102.64"
+      - "registry.local:192.168.102.64"
+      - "jaeger.local:192.168.102.64"
