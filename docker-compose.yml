@@ -10,7 +10,7 @@ services:
     expose:
       - "80"
   artifactory:
-    image: docker.bintray.io/jfrog/artifactory-oss:5.8.3
+    image: docker.bintray.io/jfrog/artifactory-oss:latest
     container_name: artifactory
     expose:
       - 8081
@@ -19,13 +19,7 @@ services:
     volumes:
       - /data/artifactory:/var/opt/jfrog/artifactory
     environment:
-      - VIRTUAL_HOST=artifactory.local
-    extra_hosts:
-      - "gitlab.local:192.168.102.64"
-      - "jenkins.local:192.168.102.64"
-      - "artifactory.local:192.168.102.64"
-      - "registry.local:192.168.102.64"
-      - "jaeger.local:192.168.102.64"
+      - VIRTUAL_HOST=artifactory.hp.uops.top
     restart: always
     ulimits:
       nproc: 65535
@@ -43,14 +37,8 @@ services:
     volumes:
       - /data/jenkins:/var/jenkins_home
     environment:
-      - VIRTUAL_HOST=jenkins.local
+      - VIRTUAL_HOST=jenkins.hp.uops.top
       - VIRTUAL_PORT=8080
-    extra_hosts:
-      - "gitlab.local:192.168.102.64"
-      - "jenkins.local:192.168.102.64"
-      - "artifactory.local:192.168.102.64"
-      - "registry.local:192.168.102.64"
-      - "jaeger.local:192.168.102.64"
     restart: always
     ulimits:
       nproc: 65535
@@ -60,36 +48,24 @@ services:
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
-    hostname: 'gitlab.local'
+    hostname: 'gitlab.hp.uops.top'
     environment:
-      VIRTUAL_HOST: gitlab.local
+      VIRTUAL_HOST: gitlab.hp.uops.top
       VIRTUAL_PORT: 80
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.local'
+        external_url 'http://gitlab.hp.uops.top'
         # Add any other gitlab.rb configuration here, each on its own line
-    extra_hosts:
-      - "gitlab.local:192.168.102.64"
-      - "jenkins.local:192.168.102.64"
-      - "artifactory.local:192.168.102.64"
-      - "registry.local:192.168.102.64"
-      - "jaeger.local:192.168.102.64"
     volumes:
       - '/data/gitlab/config:/etc/gitlab'
       - '/data/gitlab/logs:/var/log/gitlab'
       - '/data/gitlab/data:/var/opt/gitlab'
     restart: always
   docker-registry:
-    image: 'registry:2'
+    image: 'registry:latest'
     container_name: docker-registry
     environment:
-      VIRTUAL_HOST: registry.local
+      VIRTUAL_HOST: registry.hp.uops.top
       VIRTUAL_PORT: 5000
-    extra_hosts:
-      - "gitlab.local:192.168.102.64"
-      - "jenkins.local:192.168.102.64"
-      - "artifactory.local:192.168.102.64"
-      - "registry.local:192.168.102.64"
-      - "jaeger.local:192.168.102.64"
     volumes:
       - '/data/registry:/var/lib/registry'
       - './etc/docker/registry/config.yml:/etc/docker/registry/config.yml'
@@ -108,14 +84,8 @@ services:
       - 9411:9411
     environment:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
-      - VIRTUAL_HOST=jaeger.local
+      - VIRTUAL_HOST=jaeger.hp.uops.top
       - VIRTUAL_PORT=16686
-    extra_hosts:
-      - "gitlab.local:192.168.102.64"
-      - "jenkins.local:192.168.102.64"
-      - "artifactory.local:192.168.102.64"
-      - "registry.local:192.168.102.64"
-      - "jaeger.local:192.168.102.64"
 
   prometheus:
     image: prom/prometheus
