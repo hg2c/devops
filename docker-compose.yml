@@ -99,15 +99,13 @@ services:
       - VIRTUAL_PORT=9090
 
   aria2:
-    container_name: Aria2
     image: abcminiuser/docker-aria2-with-webui:latest
-    network_mode: "bridge"
     ports:
       - 6800:6800
-      - 6880:80
     volumes:
       - /data/aria2/download:/data
       - /data/aria2/conf:/conf
     environment:
       - VIRTUAL_HOST=aria2.huwo.io
+      - VIRTUAL_PORT=80
     restart: unless-stopped
