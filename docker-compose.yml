@@ -19,7 +19,7 @@ services:
     volumes:
       - /data/artifactory:/var/opt/jfrog/artifactory
     environment:
-      - VIRTUAL_HOST=artifactory.dev.uops.top
+      - VIRTUAL_HOST=artifactory.huwo.io
     restart: always
     ulimits:
       nproc: 65535
@@ -37,7 +37,7 @@ services:
     volumes:
       - /data/jenkins:/var/jenkins_home
     environment:
-      - VIRTUAL_HOST=jenkins.dev.uops.top
+      - VIRTUAL_HOST=jenkins.huwo.io
       - VIRTUAL_PORT=8080
     restart: always
     ulimits:
@@ -48,12 +48,12 @@ services:
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
-    hostname: 'gitlab.dev.uops.top'
+    hostname: 'gitlab.huwo.io'
     environment:
-      VIRTUAL_HOST: gitlab.dev.uops.top
+      VIRTUAL_HOST: gitlab.huwo.io
       VIRTUAL_PORT: 80
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.dev.uops.top'
+        external_url 'http://gitlab.huwo.io'
         # Add any other gitlab.rb configuration here, each on its own line
     volumes:
       - '/data/gitlab/config:/etc/gitlab'
@@ -64,7 +64,7 @@ services:
     image: 'registry:latest'
     container_name: docker-registry
     environment:
-      VIRTUAL_HOST: registry.dev.uops.top
+      VIRTUAL_HOST: registry.huwo.io
       VIRTUAL_PORT: 5000
     volumes:
       - '/data/registry:/var/lib/registry'
@@ -84,7 +84,7 @@ services:
       - 9411:9411
     environment:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
-      - VIRTUAL_HOST=jaeger.dev.uops.top
+      - VIRTUAL_HOST=jaeger.huwo.io
       - VIRTUAL_PORT=16686
 
   prometheus:
@@ -95,5 +95,5 @@ services:
     ports:
       - 9090:9090
     environment:
-      - VIRTUAL_HOST=prometheus.dev.uops.top
+      - VIRTUAL_HOST=prometheus.huwo.io
       - VIRTUAL_PORT=9090
