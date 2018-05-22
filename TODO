@@ -1,0 +1,27 @@
+# docker run -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+
+
+# docker run \
+#   -d \
+#   -p 3000:3000 \
+#   --name=grafana \
+#   -e "GF_SERVER_ROOT_URL=http://grafana.server.name" \
+#   -e "GF_SECURITY_ADMIN_PASSWORD=secret" \
+#   grafana/grafana
+# # create /var/lib/grafana as persistent volume storage
+# docker run -d -v /var/lib/grafana --name grafana-storage busybox:latest
+
+# # start grafana
+# docker run \
+#   -d \
+#   -p 3000:3000 \
+#   --name=grafana \
+#   --volumes-from grafana-storage \
+#   grafana/grafana
+
+# docker run \
+#   -d \
+#   -p 3000:3000 \
+#   --name=grafana \
+#   -e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource" \
+#   grafana/grafana
