@@ -118,6 +118,4 @@ services:
     volumes:
       - /data/minio/data:/data
       - /data/minio/conf:/root/.minio
-    entrypoint:
-      - server
-      - /data
+    command: server /data
