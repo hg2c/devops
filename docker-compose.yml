@@ -5,6 +5,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./etc/nginx/certs/:/etc/nginx/certs/
     ports:
       - "80:80"
     expose:
