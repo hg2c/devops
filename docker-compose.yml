@@ -8,8 +8,7 @@ services:
       - ./etc/nginx/certs/:/etc/nginx/certs/
     ports:
       - "80:80"
-    expose:
-      - "80"
+      - "443:443"
   artifactory:
     image: docker.bintray.io/jfrog/artifactory-oss:latest
     container_name: artifactory
