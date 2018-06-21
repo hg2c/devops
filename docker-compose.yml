@@ -48,18 +48,25 @@ services:
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
-    hostname: 'gitlab.huwo.io'
+    hostname: 'git.huwo.io'
     environment:
-      VIRTUAL_HOST: gitlab.huwo.io
+      VIRTUAL_HOST: git.huwo.io
       VIRTUAL_PORT: 80
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.huwo.io'
+        external_url 'http://git.huwo.io'
         # Add any other gitlab.rb configuration here, each on its own line
     volumes:
       - '/data/gitlab/config:/etc/gitlab'
       - '/data/gitlab/logs:/var/log/gitlab'
       - '/data/gitlab/data:/var/opt/gitlab'
     restart: always
+    # sysctl:
+    #   - net.core.somaxconn=1024
+    ulimits:
+      nproc: 131072
+      nofile:
+        soft: 60000
+        hard: 60000
   docker-registry:
     image: 'registry:latest'
     container_name: docker-registry
