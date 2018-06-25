@@ -48,6 +48,8 @@ services:
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
+    ports:
+      - "22:22"
     hostname: 'git.huwo.io'
     environment:
       VIRTUAL_HOST: git.huwo.io
