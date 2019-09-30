@@ -7,10 +7,11 @@ services:
       - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./etc/nginx/certs/:/etc/nginx/certs/
     environment:
-      - DEFAULT_HOST=git.huwo.io
+      - DEFAULT_HOST=git.${DOMAIN}
     ports:
       - "80:80"
       - "443:443"
+
   artifactory:
     image: docker.bintray.io/jfrog/artifactory-oss:latest
     container_name: artifactory
@@ -95,7 +96,7 @@ services:
       - 9411:9411
     environment:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
-      - VIRTUAL_HOST=jaeger.huwo.io
+      - VIRTUAL_HOST=jaeger.${DOMAIN}
       - VIRTUAL_PORT=16686
 
   prometheus:
